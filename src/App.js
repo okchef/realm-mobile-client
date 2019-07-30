@@ -15,6 +15,10 @@ export default class App extends Component {
     handleClickConnect = () => {
         const webSocket = new WebSocket("ws://localhost:8080/player");
        
+        webSocket.onopen = () => {
+            this.updateConnectedState(true);
+        };
+
         webSocket.onmessage = (data) => {
             console.error(data);
         };
@@ -25,8 +29,6 @@ export default class App extends Component {
         };
 
         this.webSocket = webSocket;
-
-        this.updateConnectedState(true);
     }
 
     handleClickSendMessage = () => {
