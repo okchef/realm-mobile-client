@@ -2,7 +2,8 @@ import React, {Component} from "react";
 import styled from "styled-components";
 
 const Bar = styled.div`
-    background-color: "grey";
+    background-color: #c5e0e7;
+    padding: 5px;
 `;
 
 export default class ConnectionBar extends Component {
@@ -17,14 +18,15 @@ export default class ConnectionBar extends Component {
     
     render() {
         const isConnected = this.props.gameServerConnection.connectedToGameServer;
+        const isConnecting = this.props.gameServerConnection.connecting;
         return (
-            <div className="connection-bar">
+            <Bar>
                 {
                     !isConnected ?
-                        <button onClick={this.handleClickConnect}>Connect</button> :
-                        <button onClick={this.handleClickDisconnect}>Disconnect</button>
+                        <button className="btn btn-primary" disabled={isConnecting} onClick={this.handleClickConnect}>Connect</button> :
+                        <button className="btn btn-primary" onClick={this.handleClickDisconnect}>Disconnect</button>
                 }
-            </div>
+            </Bar>
         );
     }
 }

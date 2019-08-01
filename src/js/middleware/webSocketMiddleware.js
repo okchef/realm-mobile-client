@@ -28,7 +28,7 @@ const wsMiddleware = () => {
                     store.dispatch(connectionToGameServerTerminated());
                 };
 
-                break;
+                return next(action);
             case actionTypes.WS_DISCONNECT_FROM_GAMESERVER:
                 if (webSocket != null) {
                     webSocket.close();
@@ -36,7 +36,7 @@ const wsMiddleware = () => {
                     console.error("Attempting to close non-existent connection.");
                 }
                 webSocket = null;
-                break;
+                return next(action);
             default:
                 return next(action);
         }

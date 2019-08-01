@@ -1,15 +1,23 @@
 import React, {Component} from "react";
+import styled from "styled-components";
 
 import ConnectionBarContainer from "../containers/ConnectionBarContainer";
 import RealmCanvas from "./RealmCanvas";
 
+const RealmBox = styled.div`
+    background-color: black;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+`;
+
 export default class Realm extends Component {
     render() {
         return (
-            <div className="realm">
+            <RealmBox className="realm">
                 <ConnectionBarContainer />
                 <RealmCanvas />
-            </div>
+            </RealmBox>
         );
     }
 }
