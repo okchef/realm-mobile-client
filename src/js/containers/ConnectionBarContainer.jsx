@@ -1,10 +1,8 @@
 import {connect} from "react-redux";
-import Realm from "../components/Realm";
+import ConnectionBar from "../components/ConnectionBar";
 import {
     connectToGameServer,
-    connectionToGameServerEstablished,
-    disconnectFromGameServer,
-    connectionToGameServerTerminated
+    disconnectFromGameServer
 } from "../actions";
 
 const mapStateToProps = (state) => {
@@ -24,4 +22,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Realm);
+export default connect(mapStateToProps, mapDispatchToProps)(ConnectionBar);

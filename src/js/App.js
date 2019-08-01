@@ -5,7 +5,7 @@ import {createStore, applyMiddleware} from "redux";
 
 import webSocketMiddleware from "./middleware/webSocketMiddleware";
 import rootReducer from "./reducers";
-import RealmContainer from "./containers/RealmContainer";
+import Realm from "./components/Realm";
 
 import "../App.css";
 
@@ -24,7 +24,7 @@ export default class App extends Component {
     render() {
         return (
             <Provider store={this.store}>
-                <RealmContainer />
+                <Realm />
             </Provider>
         );
     }
