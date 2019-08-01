@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import styled from "styled-components";
 
 import ConnectionBarContainer from "../containers/ConnectionBarContainer";
-import RealmCanvas from "./RealmCanvas";
+import LocalMapContainer from "../containers/LocalMapContainer";
 
 const RealmBox = styled.div`
     background-color: black;
@@ -16,7 +16,7 @@ export default class Realm extends Component {
         return (
             <RealmBox className="realm">
                 <ConnectionBarContainer />
-                <RealmCanvas />
+                <LocalMapContainer />
             </RealmBox>
         );
     }

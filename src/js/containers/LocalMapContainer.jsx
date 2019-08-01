@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import RealmCanvas from "../components/RealmCanvas";
+import LocalMap from "../components/LocalMap";
 import {
     connectToGameServer,
     disconnectFromGameServer
@@ -22,4 +22,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RealmCanvas);
+export default connect(mapStateToProps, mapDispatchToProps)(LocalMap);
