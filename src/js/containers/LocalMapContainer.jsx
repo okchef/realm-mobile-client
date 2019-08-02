@@ -1,8 +1,7 @@
 import {connect} from "react-redux";
 import LocalMap from "../components/LocalMap";
 import {
-    connectToGameServer,
-    disconnectFromGameServer
+    movePlayer
 } from "../actions";
 
 const mapStateToProps = (state) => {
@@ -13,11 +12,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        dispatchConnectToGameServer: () => {
-            dispatch(connectToGameServer());
-        },
-        dispatchDisconnectFromGameServer: () => {
-            dispatch(disconnectFromGameServer());
+        dispatchMovePlayer: (direction) => {
+            dispatch(movePlayer(direction));
         }
     };
 };

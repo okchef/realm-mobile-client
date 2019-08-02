@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import styled from "styled-components";
 
 import ConnectionBarContainer from "../containers/ConnectionBarContainer";
-import LocalMapContainer from "../containers/LocalMapContainer";
+import PlayArea from "./PlayArea";
 
 const RealmBox = styled.div`
     background-color: black;
@@ -16,7 +16,7 @@ export default class Realm extends Component {
         return (
             <RealmBox className="realm">
                 <ConnectionBarContainer />
-                <LocalMapContainer />
+                <PlayArea />
             </RealmBox>
         );
     }
