@@ -2,12 +2,15 @@ import {connect} from "react-redux";
 import ConnectionBar from "../components/ConnectionBar";
 import {
     connectToGameServer,
-    disconnectFromGameServer
+    disconnectFromGameServer,
+    getRealmState
 } from "../actions";
 
 const mapStateToProps = (state) => {
     return {
-        ...state
+        connected: state.gameServerConnectionReducer.connectedToGameServer,
+        connecting: state.gameServerConnectionReducer.connecting,
+        fetchingGameState: state.gameStateReducer.fetchingGameState
     };
 };
 
@@ -18,6 +21,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         dispatchDisconnectFromGameServer: () => {
             dispatch(disconnectFromGameServer());
+        },
+        dispatchGetRealmState: () => {
+            dispatch(getRealmState());
         }
     };
 };

@@ -6,14 +6,17 @@ import {
 
 const mapStateToProps = (state) => {
     return {
-        ...state
+        connected: state.gameServerConnectionReducer.connectedToGameServer,
+        fetchingGameState: state.gameStateReducer.fetchingGameState,
+        realmState: state.gameStateReducer.realmState,
+        playerId: state.gameServerConnectionReducer.playerId
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        dispatchMovePlayer: (direction) => {
-            dispatch(movePlayer(direction));
+        dispatchMovePlayer: (playerId, direction, dest) => {
+            dispatch(movePlayer(playerId, direction, dest));
         }
     };
 };

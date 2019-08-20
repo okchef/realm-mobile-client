@@ -4,6 +4,7 @@ import styled from "styled-components";
 const Bar = styled.div`
     background-color: #c5e0e7;
     padding: 5px;
+    z-index: 1;
 `;
 
 export default class ConnectionBar extends Component {
@@ -17,8 +18,8 @@ export default class ConnectionBar extends Component {
     }
     
     render() {
-        const isConnected = this.props.gameServerConnection.connectedToGameServer;
-        const isConnecting = this.props.gameServerConnection.connecting;
+        const isConnected = this.props.connected && !this.props.fetchingGameState;
+        const isConnecting = this.props.connecting || this.props.fetchingGameState;
         return (
             <Bar>
                 {

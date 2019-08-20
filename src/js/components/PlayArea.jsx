@@ -9,6 +9,7 @@ const StyledPlayArea = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
+    overflow: hidden;
 `;
 
 export default class PlayArea extends Component {

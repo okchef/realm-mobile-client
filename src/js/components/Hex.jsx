@@ -3,12 +3,19 @@ import styled from "styled-components";
 import {darken} from "polished";
 
 const Polygon = styled.polygon`
-    fill: ${props => props.touching ? darken(0.2, "#68a63e") : props.fillColor || "#68a63e"};
-    stroke: ${props => props.lineColor || "darkgreen"};
+    fill: ${props => {
+        if (props.disabled) {
+            //return darken(0.25, props.fillColor);
+            return props.fillColor;
+        } else {
+            return props.touching ? darken(0.1, props.fillColor) : props.fillColor;
+        }
+    }};
+    stroke: ${props => /*props.disabled ? darken(0.15, props.lineColor) :*/ props.lineColor};
     stroke-width: 4px;
 
     :active:hover {
-        fill: darken(0.2, "#68a63e");
+        fill: darken(0.2, ${props => props.fillColor});
     }
 `;
 
@@ -22,24 +29,35 @@ export default class Hex extends Component {
     }
     
     handleClick = () => {
-        this.props.onClick(this.props.hexIndex);
+        if (!this.props.disabled) {
+            this.props.onClick(this.props.direction);
+        }
     }
 
     handleTouchStart = () => {
-        this.setState({touching: true});
+        if (!this.props.disabled) {
+            this.setState({touching: true});
+        }
     }
 
     handleTouchEnd = () => {
-        this.setState({touching: false});
+        if (!this.props.disabled) {
+            this.setState({touching: false});
+        }
     }
 
     render() {
+        const lineColor = this.props.hex.terrain === "GRASS" ? "darkgreen" : "darkblue";
+        const fillColor = this.props.hex.terrain === "GRASS" ? "#68a63e" : "#7879c8";
+
         return (
             <div className={this.props.className}>
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
+                <svg pointerEvents="none" width="100%" height="100%" viewBox="0 0 100 100">
                     <Polygon
-                        lineColor={this.props.lineColor}
-                        fillColor={this.props.fillColor}
+                        pointerEvents="painted"
+                        disabled={this.props.disabled}
+                        lineColor={lineColor}
+                        fillColor={fillColor}
                         onClick={this.handleClick}
                         onTouchStart={this.handleTouchStart}
                         onTouchEnd={this.handleTouchEnd}

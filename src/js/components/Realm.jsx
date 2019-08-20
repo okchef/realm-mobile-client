@@ -7,6 +7,7 @@ import PlayArea from "./PlayArea";
 const RealmBox = styled.div`
     background-color: black;
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
 `;

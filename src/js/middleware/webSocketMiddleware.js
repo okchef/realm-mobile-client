@@ -16,12 +16,16 @@ const wsMiddleware = () => {
                 }
                 webSocket = new WebSocket("ws://192.168.0.17:8080/player");
 
-                webSocket.onopen = () => {
-                    store.dispatch(connectionToGameServerEstablished());
+                webSocket.onopen = (blargh) => {
+                    // Do not update our status to open until we receive our first ACK message.
+                    // This will be updated later, since this is dumb and gross.
                 };
         
-                webSocket.onmessage = (data) => {
-                    console.error(data);
+                webSocket.onmessage = (event) => {
+                    const message = JSON.parse(event.data);
+                    if (message && message.playerSessionId && message.playerId) {
+                        store.dispatch(connectionToGameServerEstablished(message.playerId, message.playerSessionId));
+                    }
                 };
                 
                 webSocket.onclose = () => {
