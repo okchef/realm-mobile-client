@@ -40,6 +40,13 @@ export function sendWsMessage(event) {
     };
 }
 
+export function handleWsMessage(event) {
+    return {
+        type: actionTypes.WS_HANDLE_MESSAGE,
+        event
+    };
+}
+
 export function movePlayer(playerId, direction, dest) {
     return function(dispatch) {
         dispatch(sendWsMessage(eventFactory.getPlayerMoveEvent(direction)));

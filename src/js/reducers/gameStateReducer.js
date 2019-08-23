@@ -1,4 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
+import {mergeRealmState} from "../realm/RealmStateUtils";
 
 const initialState = {
     realmState: {},
@@ -30,6 +31,13 @@ export default function gameState(state = initialState, action) {
                         }
                     }
                 }
+            };
+        case actionTypes.WS_HANDLE_MESSAGE:
+            const {realmStateFragment} = action.event;
+            const updatedRealmState = mergeRealmState(state.realmState, realmStateFragment);
+            return {
+                ...state,
+                realmState: updatedRealmState
             };
         default:
             return state;

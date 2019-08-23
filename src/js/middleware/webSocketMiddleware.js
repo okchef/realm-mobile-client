@@ -1,7 +1,8 @@
 import * as actionTypes from "../actions/actionTypes";
 import {
     connectionToGameServerEstablished,
-    connectionToGameServerTerminated
+    connectionToGameServerTerminated,
+    handleWsMessage
 } from "../actions";
 
 const wsMiddleware = () => {
@@ -25,6 +26,8 @@ const wsMiddleware = () => {
                     const message = JSON.parse(event.data);
                     if (message && message.playerSessionId && message.playerId) {
                         store.dispatch(connectionToGameServerEstablished(message.playerId, message.playerSessionId));
+                    } else {
+                        store.dispatch(handleWsMessage(message));
                     }
                 };
                 

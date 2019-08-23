@@ -2,6 +2,10 @@ export function getHex(map, coordinates) {
     return map.hexes[`${coordinates.x},${coordinates.y}`]
 }
 
+export function positionsAreEqual(posA, posB) {
+    return posA && posB && posA.x === posB.x && posA.y ===  posB.y;
+}
+
 export function getHexInDirection(map, origin, direction) {
     const dest = getCoordsInDirection(origin, direction);
     return getHex(map, dest);

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Hex from "./Hex";
 import PlayerIndicator from "./PlayerIndicator";
 import {getHexInDirection, getCoordsInDirection} from "../realm/HexMapUtils";
-import {getPlayerPosition} from "../realm/PlayerUtils";
+import {getPlayerPosition, getFriendPositions, getFriendsAtPosition} from "../realm/PlayerUtils";
 import {getHex, getHexAfterPath} from "../realm/HexMapUtils";
 
 const StyledHex = styled(Hex)`
@@ -19,7 +19,7 @@ const StyledPlayerIndicator = styled(PlayerIndicator)`
     position: absolute;
     width: 15%;
     left: 42.5%;
-    top: 42.5%;
+    top: 36%;
 `;
 
 const LocalMapContainer = styled.div`
@@ -56,10 +56,10 @@ export default class LocalMap extends Component {
             yOffset: null
         };
     }
-    
+
     handleClickHex = (direction) => {
         if (!this.state.isAnimating) {
-            const playerPosition = getPlayerPosition(this.props.realmState,this.props.playerId);
+            const playerPosition = getPlayerPosition(this.props.realmState, this.props.playerId);
             if (direction === "0") {
 
             } else {
@@ -115,7 +115,16 @@ export default class LocalMap extends Component {
     getDirectionHex = (playerPosition, direction, left, top) => {
         const hex = getHexInDirection(this.props.realmState.map, playerPosition, direction);
         if (hex) {
-            return <StyledHex key={direction} direction={direction} hex={hex} onClick={this.handleClickHex} width="33%" left={left} top={top}/>
+            return <StyledHex 
+                key={direction} 
+                friends={getFriendsAtPosition(this.props.realmState, this.props.playerId, hex.position)}
+                direction={direction} 
+                hex={hex} 
+                onClick={this.handleClickHex} 
+                width="33%" 
+                left={left} 
+                top={top}
+            />;
         } else {
             return null;
         }
@@ -135,7 +144,15 @@ export default class LocalMap extends Component {
     getDistantHex = (playerPosition, path, left, top) => {
         const hex = getHexAfterPath(this.props.realmState.map, playerPosition, path);
         if (hex) {
-            return <StyledHex key={path} disabled={true} hex={hex} width="33%" left={left} top={top}/>
+            return <StyledHex
+                key={path}
+                disabled={true}
+                friends={getFriendsAtPosition(this.props.realmState, this.props.playerId, hex.position)}
+                hex={hex} 
+                width="33%" 
+                left={left} 
+                top={top}
+            />;
         } else {
             return null;
         }
@@ -164,13 +181,22 @@ export default class LocalMap extends Component {
         if (this.props.connected && !this.props.fetchingGameState && this.props.realmState.map) {
 
             const playerPosition = getPlayerPosition(realmState, playerId);
+            const mainHex = getHex(this.props.realmState.map, playerPosition);
 
             return playerPosition ? (
                 <LocalMapContainer className={"local-map"}>
                     <MapAnimationContainer xOffset={this.state.xOffset} yOffset={this.state.yOffset} className={this.state.isAnimating ? "animating" : ""}>
                         {this.getDistantHexes(playerPosition)}
                         {this.getNeighboringHexes(playerPosition)}
-                        <StyledHex main={true} direction="0" hex={getHex(this.props.realmState.map, playerPosition)} onClick={this.handleClickHex} width="33%" left="33%" top="33%"/>
+                        <StyledHex
+                            main={true}
+                            direction="0" 
+                            hex={mainHex} 
+                            onClick={this.handleClickHex}
+                            width="33%" 
+                            left="33%" 
+                            top="33%"
+                            friends={getFriendsAtPosition(this.props.realmState, this.props.playerId, playerPosition)}/>
                     </MapAnimationContainer>
                     <StyledPlayerIndicator />
                 </LocalMapContainer>

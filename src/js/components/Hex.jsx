@@ -13,10 +13,20 @@ const Polygon = styled.polygon`
     }};
     stroke: ${props => /*props.disabled ? darken(0.15, props.lineColor) :*/ props.lineColor};
     stroke-width: 4px;
+    /*vector-effect: non-scaling-stroke;*/
 
     :active:hover {
         fill: darken(0.2, ${props => props.fillColor});
     }
+`;
+
+const Tray = styled.rect`
+    fill: black;
+    opacity: .3;
+`;
+
+
+const Friend = styled.circle`
 `;
 
 export default class Hex extends Component {
@@ -50,6 +60,9 @@ export default class Hex extends Component {
         const lineColor = this.props.hex.terrain === "GRASS" ? "darkgreen" : "darkblue";
         const fillColor = this.props.hex.terrain === "GRASS" ? "#68a63e" : "#7879c8";
 
+        let trayXOffset = 30;
+        let trayYOffset = 63;
+
         return (
             <div className={this.props.className}>
                 <svg pointerEvents="none" width="100%" height="100%" viewBox="0 0 100 100">
@@ -63,6 +76,21 @@ export default class Hex extends Component {
                         onTouchEnd={this.handleTouchEnd}
                         touching={this.state.touching}
                         points="25,0 75,0 100,50, 75,100 25,100 0,50"/>
+                    <Tray height="35" width="56" x="22" y="55" />
+                    {
+                        this.props.friends ? this.props.friends.map(
+                            (friend) => {
+                                const friendElement = <Friend 
+                                    key={`friend-${friend.playerId}`} 
+                                    fill={friend.color}
+                                    cx={trayXOffset} 
+                                    cy={trayYOffset}
+                                    r="5" />;
+                                trayXOffset += 12;
+                                return friendElement;
+                            }
+                        ) : null
+                    }
                 </svg>
             </div>
         );
