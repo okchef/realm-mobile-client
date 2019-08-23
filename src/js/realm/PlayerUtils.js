@@ -23,3 +23,11 @@ export function getFriendsAtPosition(realmState, playerId, position) {
         return [];
     }
 }
+
+export function getPlayerColor(realmState, playerId) {
+    if (realmState && realmState.players && realmState.players[playerId]) {
+        return realmState.players[playerId].color;
+    } else {
+        return null;
+    }
+}

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Hex from "./Hex";
 import PlayerIndicator from "./PlayerIndicator";
 import {getHexInDirection, getCoordsInDirection} from "../realm/HexMapUtils";
-import {getPlayerPosition, getFriendPositions, getFriendsAtPosition} from "../realm/PlayerUtils";
+import {getPlayerPosition, getPlayerColor, getFriendsAtPosition} from "../realm/PlayerUtils";
 import {getHex, getHexAfterPath} from "../realm/HexMapUtils";
 
 const StyledHex = styled(Hex)`
@@ -181,6 +181,7 @@ export default class LocalMap extends Component {
         if (this.props.connected && !this.props.fetchingGameState && this.props.realmState.map) {
 
             const playerPosition = getPlayerPosition(realmState, playerId);
+            const playerColor = getPlayerColor(realmState, playerId);
             const mainHex = getHex(this.props.realmState.map, playerPosition);
 
             return playerPosition ? (
@@ -198,7 +199,7 @@ export default class LocalMap extends Component {
                             top="33%"
                             friends={getFriendsAtPosition(this.props.realmState, this.props.playerId, playerPosition)}/>
                     </MapAnimationContainer>
-                    <StyledPlayerIndicator />
+                    <StyledPlayerIndicator color={playerColor} />
                 </LocalMapContainer>
             ) : null;
         }
