@@ -57,8 +57,20 @@ export default class Hex extends Component {
     }
 
     render() {
-        const lineColor = this.props.hex.terrain === "GRASS" ? "darkgreen" : "darkblue";
-        const fillColor = this.props.hex.terrain === "GRASS" ? "#68a63e" : "#7879c8";
+        let lineColor, fillColor;
+
+        if (this.props.hex.terrain === "GRASS") {
+            lineColor = "darkgreen";
+            fillColor = "#68a63e";
+        } else if(this.props.hex.terrain === "WATER") {
+            lineColor = "darkblue";
+            fillColor = "#7879c8";
+        }
+
+        if (!this.props.hex.visible) {
+            lineColor = darken(0.1, lineColor);
+            fillColor = darken(0.3, fillColor);
+        }
 
         let trayXOffset = 30;
         let trayYOffset = 63;
